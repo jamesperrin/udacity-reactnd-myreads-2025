@@ -1,0 +1,14 @@
+# Ignore folders, by default:
+**/.git
+**/.svn
+**/.hg
+**/node_modules
+**/vendor
+
+# Ignore artifacts:
+build
+coverage
+
+# Ignore all HTML files:
+*.html
+*.htm
