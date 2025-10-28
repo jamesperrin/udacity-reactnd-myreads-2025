@@ -9,30 +9,80 @@ if (!token) {
   // Modern code which uses crypto for stronger randomness.
   // token = crypto.randomUUID();
 
-  // Modern code which uses crypto for stronger randomness.
+  // Using hardcoded code ensuring to use the same data.
   token = 'udacity-reactnd-myreads-2025-jp';
 }
 
 const headers = {
   Accept: 'application/json',
-  Authorization: token,
+  Authorization: `${token}`,
 };
 
 export const get = (bookId) =>
   fetch(`${api}/books/${bookId}`, { headers })
-    .then((res) => res.json())
-    .then((data) => data.book);
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error(`HTTP Error: ${res.status}`);
+      }
+
+      return res.json();
+    })
+    .then((data) => data.book)
+    .catch((error) => {
+      console.error('Fetch error:', error.message);
+      throw error;
+    });
 
 export const getAsync = async (bookId) => {
-  const res = await fetch(`${api}/books/${bookId}`, { headers });
-  const data = await res.json();
-  return data.book;
+  try {
+    const res = await fetch(`${api}/books/${bookId}`, { headers });
+    if (!res.ok) {
+      throw new Error(`HTTP Error: ${res.status}`);
+    }
+
+    const data = await res.json();
+    return data.book;
+  } catch (error) {
+    console.error('Error fetching data:', error.message);
+    throw error;
+  }
 };
 
 export const getAll = () =>
   fetch(`${api}/books`, { headers })
-    .then((res) => res.json())
-    .then((data) => data.books);
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error(`HTTP Error: ${res.status}`);
+      }
+
+      return res.json();
+    })
+    .then((data) => data.books)
+    .catch((error) => {
+      console.error('Fetch error:', error.message);
+      throw error;
+    });
+
+export const getAllAsync = async () => {
+  try {
+    const res = await fetch(`${api}/books`, { headers });
+
+    if (!res.ok) {
+      throw new Error(`HTTP Error: ${res.status}`);
+    }
+
+    const data = await res.json();
+    return data.books;
+  } catch (error) {
+    console.error('Error fetching data:', error.message);
+    // console.log('Name:', error.name); // Type of error (e.g., ReferenceError)
+    // console.log('Message:', error.message); // Error message
+    // console.log('Stack:', error.stack); // Stack trace (non-standard but widely supported)
+
+    // Rethrow the error for higher-level handling
+    throw error;
+  }
+};
 
 export const update = (book, shelf) =>
   fetch(`${api}/books/${book.id}`, {
@@ -42,19 +92,47 @@ export const update = (book, shelf) =>
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ shelf }),
-  }).then((res) => res.json());
+  })
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error(`HTTP Error: ${res.status}`);
+      }
+
+      return res.json();
+    })
+    .catch((error) => {
+      console.error('Fetch error:', error.message);
+      throw error;
+    });
 
 export const updateAsync = async (book, shelf) => {
-  const res = await fetch(`${api}/books/${book.id}`, {
-    method: 'PUT',
-    headers: {
-      ...headers,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ shelf }),
-  });
+  if (!book) {
+    throw new Error('Book object is NULL');
+  }
 
-  return await res.json();
+  if (!shelf) {
+    throw new Error('Shelf NULL');
+  }
+
+  try {
+    const res = await fetch(`${api}/books/${book.id}`, {
+      method: 'PUT',
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ shelf }),
+    });
+
+    if (!res.ok) {
+      throw new Error(`HTTP Error: ${res.status}`);
+    }
+
+    return await res.json();
+  } catch (error) {
+    console.error('Error fetching data:', error.message);
+    throw error;
+  }
 };
 
 export const search = (query, maxResults) =>
@@ -66,19 +144,49 @@ export const search = (query, maxResults) =>
     },
     body: JSON.stringify({ query, maxResults }),
   })
-    .then((res) => res.json())
-    .then((data) => data.books);
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error(`HTTP Error: ${res.status}`);
+      }
 
-export const searchAsync = async () => {
-  const res = await fetch(`${api}/search`, {
-    method: 'POST',
-    headers: {
-      ...headers,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ query, maxResults }),
-  });
+      return res.json();
+    })
+    .then((data) => data.books)
+    .catch((error) => {
+      console.error('Fetch error:', error.message);
+      throw error;
+    });
 
-  const data = await res.json();
-  return data.books;
+export const searchAsync = async (query, maxResults) => {
+  try {
+    const res = await fetch(`${api}/search`, {
+      method: 'POST',
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ query, maxResults }),
+    });
+
+    if (!res.ok) {
+      throw new Error(`HTTP Error: ${res.status}`);
+    }
+
+    const data = await res.json();
+    return data.books;
+  } catch (error) {
+    console.error('Error fetching data:', error.message);
+    throw error;
+  }
+};
+
+export default {
+  get,
+  getAsync,
+  getAll,
+  getAllAsync,
+  update,
+  updateAsync,
+  search,
+  searchAsync,
 };

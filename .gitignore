@@ -6,29 +6,46 @@
 .env.test.local
 .env.production.local
 
-# Created by https://www.toptal.com/developers/gitignore/api/git,node,react,nextjs,mean
+# Created by https://www.toptal.com/developers/gitignore/api/node,react,nextjs,mean
 # Created by https://www.toptal.com/developers/gitignore/api/windows,macos,linux,visualstudio,visualstudiocode,sublimetext,lamp,vim
 
-# Created by https://www.toptal.com/developers/gitignore/api/git,node,react,nextjs,mean
-# Edit at https://www.toptal.com/developers/gitignore?templates=git,node,react,nextjs,mean
-
-### Git ###
-# Created by git for backups. To disable backups in Git:
-# $ git config --global mergetool.keepBackup false
-*.orig
-
-# Created by git when using merge tools for conflicts
-*.BACKUP.*
-*.BASE.*
-*.LOCAL.*
-*.REMOTE.*
-*_BACKUP_*.txt
-*_BASE_*.txt
-*_LOCAL_*.txt
-*_REMOTE_*.txt
+# Created by https://www.toptal.com/developers/gitignore/api/node,react,nextjs,mean
+# Edit at https://www.toptal.com/developers/gitignore?templates=node,react,nextjs,mean
 
 ### MEAN ###
 # MEAN Stack Base
+
+### MEAN.Anglar Stack ###
+## Angular ##
+# compiled output
+dist/
+tmp/
+app/**/*.js
+app/**/*.js.map
+
+# dependencies
+node_modules/
+bower_components/
+
+# IDEs and editors
+.idea/
+
+# misc
+.sass-cache/
+connect.lock/
+coverage/
+libpeerconnection.log/
+npm-debug.log
+testem.log
+typings/
+.angular/
+
+# e2e
+e2e/*.js
+e2e/*.map
+
+# System Files
+.DS_Store/
 
 ### MEAN.Node Stack ###
 # Logs
@@ -72,7 +89,6 @@ bower_components
 build/Release
 
 # Dependency directories
-node_modules/
 jspm_packages/
 
 # Snowpack dependency directory (https://snowpack.dev/)
@@ -160,37 +176,6 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
-
-### MEAN.Anglar Stack ###
-## Angular ##
-# compiled output
-dist/
-tmp/
-app/**/*.js
-app/**/*.js.map
-
-# dependencies
-bower_components/
-
-# IDEs and editors
-.idea/
-
-# misc
-.sass-cache/
-connect.lock/
-coverage/
-libpeerconnection.log/
-npm-debug.log
-testem.log
-typings/
-.angular/
-
-# e2e
-e2e/*.js
-e2e/*.map
-
-# System Files
-.DS_Store/
 
 ### NextJS ###
 # dependencies
@@ -317,8 +302,7 @@ psd
 thumb
 sketch
 
-# End of https://www.toptal.com/developers/gitignore/api/git,node,react,nextjs,mean
-
+# End of https://www.toptal.com/developers/gitignore/api/node,react,nextjs,mean
 
 # Created by https://www.toptal.com/developers/gitignore/api/windows,macos,linux,visualstudio,visualstudiocode,sublimetext,lamp,vim
 # Edit at https://www.toptal.com/developers/gitignore?templates=windows,macos,linux,visualstudio,visualstudiocode,sublimetext,lamp,vim
@@ -954,43 +938,15 @@ FodyWeavers.xsd
 
 
 #====================================================================
-### CUSTOM ###
-
-## EF Core Power Tools
-efpt.config.json
-
-## .NET Core Projects
-appsettings.json
-appsettings.Development.json
-appsettings.Production.json
+### CUSTOM SETTINGS ###
 
 ## Folders
-_[Aa]rchived/
-_[Bb]uild_assets/
-[Ll]ogs/
-[Bb]uild/[Pp]ublish/
-[Bb]uild_[Dd]eploy/
-[Cc]onfig/
-_[Cc]onfig/
-[Dd]eploy/
-[Dd]ev*/
-[Dd]ev[Dd]ocs/
-[Dd]ocs/
-[Dd]ev[_-][Dd]ocs/
-[Dd]ev[_-][Ss]cripts/
-[Dd]ev/
-[Dd]ocs/
 
 ## Files
 [Pp]rivate*
 [Ss]ecret*
 *[Pp]rivate*
 *[Ss]ecret*
-[Ff]ortify*
-*.fpr
-
-### END - CUSTOM ###
-
 # Logs #
 /log/*
 !/log/.keep
@@ -1009,5 +965,5 @@ _[Cc]onfig/
 *.tar
 *.zip
 
-# END CUSTOM SETTINGS
+### END - CUSTOM SETTINGS ###
 #====================================================================
