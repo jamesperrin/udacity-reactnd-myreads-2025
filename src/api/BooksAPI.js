@@ -9,13 +9,13 @@ if (!token) {
   // Modern code which uses crypto for stronger randomness.
   // token = crypto.randomUUID();
 
-  // Modern code which uses crypto for stronger randomness.
+  // Using hardcoded code ensuring to use the same data.
   token = 'udacity-reactnd-myreads-2025-jp';
 }
 
 const headers = {
   Accept: 'application/json',
-  Authorization: token,
+  Authorization: `${token}`,
 };
 
 export const get = (bookId) =>
@@ -157,7 +157,7 @@ export const search = (query, maxResults) =>
       throw error;
     });
 
-export const searchAsync = async () => {
+export const searchAsync = async (query, maxResults) => {
   try {
     const res = await fetch(`${api}/search`, {
       method: 'POST',
