@@ -1,10 +1,10 @@
-import PropTypes from 'prop-types';
 import Book from '../components/Book';
+import PropTypes from 'prop-types';
 
-const Bookshelf = ({ bookShelfTitle, readingBooksList, doMoveBook }) => {
+const Bookshelf = ({ title, readingBooksList, doMoveBook }) => {
   return (
     <div className="bookshelf">
-      <h2 className="bookshelf-title">{bookShelfTitle}</h2>
+      <h2 className="bookshelf-title">{title}</h2>
       <div className="bookshelf-books">
         <ol className="books-grid">
           {readingBooksList.map((book) => (
@@ -19,7 +19,7 @@ const Bookshelf = ({ bookShelfTitle, readingBooksList, doMoveBook }) => {
 };
 
 Bookshelf.propTypes = {
-  bookShelfTitle: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
   readingBooksList: PropTypes.object.isRequired,
   doMoveBook: PropTypes.func.isRequired,
 };

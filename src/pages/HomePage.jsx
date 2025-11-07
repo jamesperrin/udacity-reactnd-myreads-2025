@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
 import Bookshelf from '../components/Bookshelf';
+import PropTypes from 'prop-types';
 
 const HomePage = ({ readingList, bookShelves, doMoveBook, showSearchPage, setShowSearchpage }) => {
   /**
@@ -15,11 +15,11 @@ const HomePage = ({ readingList, bookShelves, doMoveBook, showSearchPage, setSho
         <h1>MyReads</h1>
       </div>
       {readingList.length > 0 && (
-        <div className="list-books-content">
+        <div className="list-books-content" aria-live="polite">
           {bookShelves.map((bookShelf) => (
             <Bookshelf
               key={bookShelf.category}
-              bookShelfTitle={bookShelf.title}
+              title={bookShelf.title}
               readingBooksList={readingBooksList(bookShelf.category)}
               doMoveBook={doMoveBook}
             />
@@ -42,4 +42,3 @@ HomePage.propTypes = {
 };
 
 export default HomePage;
-
