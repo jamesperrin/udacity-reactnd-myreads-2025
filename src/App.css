@@ -110,6 +110,11 @@ body,
   padding: 80px 10px 20px;
 }
 
+.search-books-results__no-data {
+  font-weight: bold;
+  font-size: 1.75em;
+}
+
 /* books grid */
 
 .books-grid {
