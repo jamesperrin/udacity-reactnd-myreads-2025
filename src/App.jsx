@@ -1,8 +1,9 @@
-import './App.css';
 import { useState, useEffect } from 'react';
-import BooksAPI from './api/BooksAPI';
 import HomePage from './pages/HomePage';
+import SearchPage from './pages/SearchPage';
+import BooksAPI from './api/BooksAPI';
 import { showSwalError } from './lib/SweetAlert';
+import './App.css';
 
 function App() {
   const [showSearchPage, setShowSearchpage] = useState(false);
@@ -21,27 +22,32 @@ function App() {
     let isMounted = true;
 
     const getBooksList = async () => {
-      // Exmaple code using Promises
-      // BooksAPI.getAll()
-      //   .then((books) => {
-      //     if (!books) {
-      //       throw new Error('No books returned.');
-      //     }
+      /*
+          Exmaple code using Promises
 
-      //     setReadingList(books.sort((a, b) => a.title.localeCompare(b.title)));
-      //   })
-      //   .catch((error) => {
-      //     console.error(error);
-      //   });
+          BooksAPI.getAll()
+            .then((books) => {
+              if (!books) {
+                throw new Error('No books returned.');
+              }
+
+              setReadingList(books.sort((a, b) => a.title.localeCompare(b.title)));
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+      */
 
       try {
-        // Exmaple code using Promises with await
-        // const books = await BooksAPI.getAll();
+        /*
+          Exmaple code using Promises with await
+          const books = await BooksAPI.getAll();
+        */
 
         const books = await BooksAPI.getAllAsync();
 
         if (isMounted) {
-          // Sort by the 'title' property alphabetically
+          // Sort Books by the 'title' property alphabetically
           setReadingList(books.sort((a, b) => a.title.localeCompare(b.title)));
         }
       } catch (error) {
@@ -62,7 +68,7 @@ function App() {
 
   /**
    * @description Updates book's shelf location
-   * @param {Object} Book - JSON Object
+   * @param {object} Book - JSON Object
    * @param {string} shelf - Bookshelf location
    */
   const doMoveBook = async (book, shelf) => {
@@ -72,8 +78,11 @@ function App() {
       // Updating local state avoiding repeated network calls.
       setReadingList((prev) => {
         const updatedBook = { ...book, shelf };
+
+        // Check if book exists in current state.
         const exists = prev.find((b) => b.id === book.id);
 
+        // If book exists, updates book state
         if (exists) {
           return prev.map((b) => (b.id === book.id ? updatedBook : b));
         }
@@ -89,27 +98,20 @@ function App() {
   return (
     <div className="app">
       {showSearchPage ? (
-        <div className="search-books">
-          <div className="search-books-bar">
-            <a className="close-search" onClick={() => setShowSearchpage(!showSearchPage)}>
-              Close
-            </a>
-            <div className="search-books-input-wrapper">
-              <input type="text" placeholder="Search by title, author, or ISBN" />
-            </div>
-          </div>
-          <div className="search-books-results">
-            <ol className="books-grid"></ol>
-          </div>
-        </div>
+        <SearchPage
+          readingList={readingList}
+          doMoveBook={doMoveBook}
+          showSearchPage={showSearchPage}
+          setShowSearchpage={setShowSearchpage}
+        />
       ) : (
         <>
           <HomePage
             readingList={readingList}
+            bookShelves={bookShelves}
+            doMoveBook={doMoveBook}
             showSearchPage={showSearchPage}
             setShowSearchpage={setShowSearchpage}
-            doMoveBook={doMoveBook}
-            bookShelves={bookShelves}
           />
         </>
       )}
