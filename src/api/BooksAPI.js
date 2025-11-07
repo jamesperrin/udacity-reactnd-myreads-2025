@@ -9,7 +9,7 @@ if (!token) {
   // Modern code which uses crypto for stronger randomness.
   // token = crypto.randomUUID();
 
-  // Using hardcoded code ensuring to use the same data.
+  // Using hardcoded code ensuring to use the same data while testing.
   token = 'udacity-reactnd-myreads-2025-jp';
 }
 
