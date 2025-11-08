@@ -175,7 +175,7 @@ export const searchAsync = async (query, maxResults) => {
     const data = await res.json();
     return data.books;
   } catch (error) {
-    console.error('Error fetching data:', error.message);
+    console.error('Error searching data:', error.message);
     throw error;
   }
 };

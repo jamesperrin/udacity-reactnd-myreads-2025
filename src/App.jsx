@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
+import { Route, Routes } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import SearchPage from './pages/SearchPage';
+import NotFound from './pages/NotFound';
 import BooksAPI from './api/BooksAPI';
-import { showSwalError } from './lib/SweetAlert';
+import SweetalertHelper from './lib/SweetalertHelper';
 import './App.css';
 
 function App() {
-  const [showSearchPage, setShowSearchpage] = useState(false);
   const [readingList, setReadingList] = useState([]);
 
   /**
@@ -55,7 +56,7 @@ function App() {
           setReadingList([]);
         }
 
-        showSwalError(error, `Failed to get books data.`);
+        SweetalertHelper.showSwalError(error, `Failed to get books data.`);
         console.error(error);
       }
     };
@@ -90,32 +91,23 @@ function App() {
         return [...prev, updatedBook];
       });
     } catch (error) {
-      showSwalError(error, 'Failed to move Book');
+      SweetalertHelper.showSwalError(error, 'Failed to move Book');
       console.error(error);
     }
   };
 
   return (
-    <div className="app">
-      {showSearchPage ? (
-        <SearchPage
-          readingList={readingList}
-          doMoveBook={doMoveBook}
-          showSearchPage={showSearchPage}
-          setShowSearchpage={setShowSearchpage}
+    <main className="app">
+      <Routes>
+        <Route
+          path="/"
+          exact
+          element={<HomePage readingList={readingList} bookShelves={bookShelves} doMoveBook={doMoveBook} />}
         />
-      ) : (
-        <>
-          <HomePage
-            readingList={readingList}
-            bookShelves={bookShelves}
-            doMoveBook={doMoveBook}
-            showSearchPage={showSearchPage}
-            setShowSearchpage={setShowSearchpage}
-          />
-        </>
-      )}
-    </div>
+        <Route path="search" element={<SearchPage readingList={readingList} doMoveBook={doMoveBook} />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </main>
   );
 }
 

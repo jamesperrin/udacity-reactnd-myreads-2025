@@ -1,7 +1,8 @@
 import Bookshelf from '../components/Bookshelf';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const HomePage = ({ readingList, bookShelves, doMoveBook, showSearchPage, setShowSearchpage }) => {
+const HomePage = ({ readingList, bookShelves, doMoveBook }) => {
   /**
    * @description Filters list of books based on shelf
    * @param {string} bookShelf - book shelf
@@ -27,7 +28,9 @@ const HomePage = ({ readingList, bookShelves, doMoveBook, showSearchPage, setSho
         </div>
       )}
       <div className="open-search">
-        <a onClick={() => setShowSearchpage(!showSearchPage)}>Add a book</a>
+        <Link to="/search" relative="path">
+          Add a book
+        </Link>
       </div>
     </div>
   );
@@ -37,8 +40,6 @@ HomePage.propTypes = {
   readingList: PropTypes.object.isRequired,
   bookShelves: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.string]).isRequired,
   doMoveBook: PropTypes.func.isRequired,
-  showSearchPage: PropTypes.bool.isRequired,
-  setShowSearchpage: PropTypes.func.isRequired,
 };
 
 export default HomePage;
