@@ -188,3 +188,7 @@ body,
   text-align: center;
   font-size: 0.8em;
 }
+
+.not-found-page {
+  padding: 2em;
+}
