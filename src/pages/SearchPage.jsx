@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import Book from '../components/Book';
 import BooksAPI from '../api/BooksAPI';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import SweetalertHelper from '../lib/SweetalertHelper';
 
-const SearchPage = ({ readingList, doMoveBook, showSearchPage, setShowSearchpage }) => {
+const SearchPage = ({ readingList, doMoveBook }) => {
   const [query, setQuery] = useState('');
   const [bookSearchList, setBookSearchList] = useState([]);
 
@@ -31,14 +33,14 @@ const SearchPage = ({ readingList, doMoveBook, showSearchPage, setShowSearchpage
       return;
     }
 
-    const searchList = await BooksAPI.search(searchQuery);
-
-    if (!Array.isArray(searchList) || searchList.length < 1) {
-      setBookSearchList([]);
-      return;
-    }
-
     try {
+      const searchList = await BooksAPI.searchAsync(searchQuery);
+
+      if (!Array.isArray(searchList) || searchList.length < 1) {
+        setBookSearchList([]);
+        return;
+      }
+
       /*
         ORIGINAL CODE
 
@@ -65,6 +67,7 @@ const SearchPage = ({ readingList, doMoveBook, showSearchPage, setShowSearchpage
 
       setBookSearchList(merged);
     } catch (error) {
+      SweetalertHelper.showSwalError(error, `Failed to search for Books ${error.message}`);
       console.error(error);
       setBookSearchList([]);
     }
@@ -73,9 +76,9 @@ const SearchPage = ({ readingList, doMoveBook, showSearchPage, setShowSearchpage
   return (
     <div className="search-books">
       <div className="search-books-bar">
-        <a className="close-search" onClick={() => setShowSearchpage(!showSearchPage)}>
+        <Link to="/" className="close-search">
           Close
-        </a>
+        </Link>
         <div className="search-books-input-wrapper">
           <input type="text" placeholder="Search by title" value={query} onChange={handleChange} />
         </div>
@@ -102,8 +105,6 @@ const SearchPage = ({ readingList, doMoveBook, showSearchPage, setShowSearchpage
 SearchPage.propTypes = {
   readingList: PropTypes.object.isRequired,
   doMoveBook: PropTypes.func.isRequired,
-  showSearchPage: PropTypes.bool.isRequired,
-  setShowSearchpage: PropTypes.func.isRequired,
 };
 
 export default SearchPage;
