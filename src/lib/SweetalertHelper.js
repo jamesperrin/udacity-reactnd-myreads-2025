@@ -4,8 +4,8 @@ const MySwal = withReactContent(Swal);
 
 export const showSwalError = (title, text, cb) => {
   MySwal.fire({
-    title: title ?? 'Error!',
-    text: text ?? 'Something went wrong.',
+    title: title ? `${title}` : 'Oops...!',
+    html: text ? `${text}` : 'Something went wrong.',
     icon: 'error',
     confirmButtonText: 'OK',
     // Prevent SweetAlert from immediately re‑focusing the confirm button again
@@ -13,12 +13,16 @@ export const showSwalError = (title, text, cb) => {
     didClose: () => {
       if (cb && typeof cb === 'function') {
         // Defer to ensure SweetAlert's focus trap has been fully released
-        requestAnimationFrame(() => {});
+        requestAnimationFrame(() => {
+          cb();
+        });
       }
     },
   });
 };
 
-export default {
+const SweetalertHelper = {
   showSwalError,
 };
+
+export default SweetalertHelper;
