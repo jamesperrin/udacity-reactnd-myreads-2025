@@ -7,10 +7,10 @@ if (!token) {
   // token = localStorage.token = Math.random().toString(36).substr(-8);
 
   // Modern code which uses crypto for stronger randomness.
-  // token = crypto.randomUUID();
+  token = crypto.randomUUID();
 
   // Using hardcoded code ensuring to use the same data while testing.
-  token = 'udacity-reactnd-myreads-2025-jp';
+  // token = 'udacity-reactnd-myreads-2025-jp';
 }
 
 const headers = {

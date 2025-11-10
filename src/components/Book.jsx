@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 const Book = ({ book, doMoveBook }) => {
+  const [bookshelf, setBookshelf] = useState('none');
   const [authorsNames, setAuthorsNames] = useState('');
   const bookId = crypto.randomUUID();
 
@@ -27,6 +28,8 @@ const Book = ({ book, doMoveBook }) => {
           if (typeof authors === 'string') {
             setAuthorsNames(authors);
           }
+
+          setBookshelf(shelf);
         }
       } catch (error) {
         if (isMounted) {
@@ -51,6 +54,7 @@ const Book = ({ book, doMoveBook }) => {
    */
   const handleChange = (evt) => {
     const shelf = evt.target.value;
+    setBookshelf(shelf);
     doMoveBook(book, shelf);
   };
 
@@ -65,7 +69,7 @@ const Book = ({ book, doMoveBook }) => {
             backgroundImage: `url(${thumbnail})`,
           }}></div>
         <div className="book-shelf-changer">
-          <select onChange={handleChange} value={shelf} aria-label={`Change shelf for ${title}`}>
+          <select onChange={handleChange} value={bookshelf} aria-label={`Change shelf for ${title}`}>
             <option disabled>Move to...</option>
             <option value="currentlyReading">Currently Reading</option>
             <option value="wantToRead">Want to Read</option>
